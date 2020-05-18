@@ -10,7 +10,8 @@
                 </div>
                 <div class="px-6 py-4 flex items-center">
                     <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{product.price / 100}} €</span>
-                    <button class="bg-transparent flex-grow hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
+                    <button @click="addToCart(product.id)"
+                            class="bg-transparent flex-grow hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
                         Buy
                     </button>
                 </div>
@@ -35,7 +36,16 @@
 
         },
         methods: {
-
+            addToCart(product_id) {
+                this.loading = true
+                axios.post(`/api/cart`, {product_id: product_id})
+                    .then(response => {
+                        console.log(response)
+                        this.$emit('updateCart', response.data)
+                        this.loading = false
+                    })
+                    .catch(error => console.log(error))
+            },
         }
     }
 </script>
