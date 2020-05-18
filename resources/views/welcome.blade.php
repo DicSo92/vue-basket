@@ -9,13 +9,21 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-        <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+        @if (env('APP_ENV') === 'local')
+            <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        @else
+            <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+        @endif
     </head>
     <body>
         <div id="app">
             <Index></Index>
         </div>
+        @if (env('APP_ENV') === 'local')
+            <script src="{{ asset('js/app.js') }}"></script>
+        @else
+            <script src="{{ secure_asset('js/app.js') }}"></script>
+        @endif
 
-        <script src="{{ secure_asset('js/app.js') }}"></script>
     </body>
 </html>

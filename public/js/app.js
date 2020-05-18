@@ -38474,6 +38474,7 @@ var render = function() {
                       "div",
                       {
                         staticClass: "trash cursor-pointer",
+                        attrs: { disable: "" },
                         on: {
                           click: function($event) {
                             return _vm.deleteCart(cartItem.product_id)
