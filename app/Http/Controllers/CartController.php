@@ -46,6 +46,7 @@ class CartController extends Controller
         $newCart->product_id = $request->get('product_id');
         $newCart->save();
 
+        $newCart->load('product');
         return response()->json($newCart);
     }
 
@@ -80,6 +81,25 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        $deleteCarts = Cart::truncate();
+
+        return response()->json($deleteCarts);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Cart  $cart
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($product_id)
+    {
+        $cart = Cart::where('product_id', $product_id)->first();
+        if (!$cart) {
+            return response()->json(['error' => true, 'message' => 'Unable to find Cart Product with ID '. $product_id], 404);
+        }
+        $cart->delete();
+
+        return response()->json(null, 200);
     }
 }

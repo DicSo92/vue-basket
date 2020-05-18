@@ -20,5 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('products', 'ProductController@index');
 
-Route::get('products', 'CartController@index');
-Route::post('products', 'CartController@store');
+Route::get('cart', 'CartController@index');
+Route::post('cart', 'CartController@store');
+
+Route::delete('cart', 'CartController@destroy');
+Route::delete('cart/{product_id}', 'CartController@delete');
