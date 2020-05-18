@@ -14,7 +14,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = Cart::all()->load('product');
+
+        return response()->json($cart);
     }
 
     /**
