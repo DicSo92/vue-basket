@@ -19,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('products', 'ProductController@index');
+
+Route::get('products', 'CartController@index');
+Route::post('products', 'CartController@store');
