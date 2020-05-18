@@ -2088,8 +2088,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -38715,11 +38713,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "font-bold" }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.getTotalPrice) +
-                  " €\n            "
-              )
+              _vm._v(_vm._s(_vm.getTotalPrice) + " €")
             ])
           ]
         )
