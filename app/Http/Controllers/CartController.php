@@ -35,19 +35,27 @@ class CartController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => true, 'message' => $e->getMessage()], 422);
         }
-
         $product = Product::find($request->get('product_id'));
         if (!$product) {
             return response()->json(['error' => true, 'message' => 'Unable to find Product with ID '. $request->get('product_id')], 404);
         }
 
-        $newCart = new Cart();
-        $newCart->quantity = 1;
-        $newCart->product_id = $request->get('product_id');
-        $newCart->save();
+        $cartProduct = Cart::where('product_id', $request->get('product_id'))->first();
+        if ($cartProduct) {
+            $cartProduct->quantity += 1;
+            $cartProduct->save();
 
-        $newCart->load('product');
-        return response()->json($newCart);
+            $cartProduct->load('product');
+            return response()->json($cartProduct);
+        } else {
+            $newCart = new Cart();
+            $newCart->quantity = 1;
+            $newCart->product_id = $request->get('product_id');
+            $newCart->save();
+
+            $newCart->load('product');
+            return response()->json($newCart);
+        }
     }
 
     /**
@@ -81,9 +89,10 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        $deleteCarts = Cart::truncate();
+//        $deleteCarts = Cart::truncate();
+        Cart::truncate();
 
-        return response()->json($deleteCarts);
+        return response()->json([], 200);
     }
 
     /**
@@ -100,6 +109,6 @@ class CartController extends Controller
         }
         $cart->delete();
 
-        return response()->json(null, 200);
+        return response()->json([], 200);
     }
 }
