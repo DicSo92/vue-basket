@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Mail\RemoveAllMail;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -92,6 +94,13 @@ class CartController extends Controller
 //        $deleteCarts = Cart::truncate();
         Cart::truncate();
 
+        $infos = [
+            'name' => 'blabla',
+            'info' => 'Cart succesfully removed !'
+        ];
+
+        Mail::to('luzzi.charly@gmail.com')->send(new RemoveAllMail($infos));
+
         return response()->json([], 200);
     }
 
@@ -110,5 +119,7 @@ class CartController extends Controller
         $cart->delete();
 
         return response()->json([], 200);
+
+
     }
 }
